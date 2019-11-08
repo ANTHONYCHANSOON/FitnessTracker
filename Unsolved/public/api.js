@@ -6,7 +6,7 @@ const API = {
     return json[json.length - 1];
   },
   async addExercise(data) {
-    
+    alert("add exercise")
     const id = location.search.split("=")[1];
 
     const res = await fetch("/api/workouts/" + id, {
@@ -20,6 +20,7 @@ const API = {
     return json;
   },
   async createWorkout() {
+    alert("create workout")
     const res = await fetch("/api/workouts", {
       method: "POST",
       headers: { "Content-Type": "application/json" }
