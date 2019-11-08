@@ -27,31 +27,40 @@ router.get("/api/workouts", function (req, res) {
 //         });
 // });
 
-// router.put("/api/workouts/:id", function (req, res) {
-//     //let id = req.params.id;
-//     console.log(req.params.id);
-//     console.log(req.body);
-//     Workout.update(
-//         {
-//             _id: mongojs.ObjectId(req.params.id)
-//         },
-//         {
-//             $set: req.body
-//         },
-//         (error, data) => {
-//             if (error) {
-//                 res.send(error);
-//             } else {
-//                 res.send(data);
-//             }
-//         }
-//     )
-// })
+router.put("/api/workouts/:id", ({body, params}, res) => {
+    //let id = req.params.id;
+    // console.log("this is ID" , req.params.id);
+    // console.log("this is body", req.body);
+
+    Workout.findByIdAndUpdate( params.id, {$push : {exercises : body}}, {new: true}, (err, doc) => {
+        if (err) {
+            console.log("Something wrong when updating data!");
+        }
+        console.log("this is doc (Return)", doc);
+        return res.send(doc);
+    });
+
+    // Workout.update(
+    //     {
+    //         _id: mongojs.ObjectId(req.params.id)
+    //     },
+    //     {
+    //         $set: req.body
+    //     },
+    //     (error, data) => {
+    //         if (error) {
+    //             res.send(error);
+    //         } else {
+    //             res.send(data);
+    //         }
+    //     }
+    // )
+})
 
 router.post("/api/workouts", function (req, res) {
     //console.log(req);
 
-    Workout.create(req.body, function (error, data) {
+    Workout.create({}, function (error, data) {
         if (error) {
             res.send(error);
         } else {
@@ -60,18 +69,6 @@ router.post("/api/workouts", function (req, res) {
     })
 });
 
-router.put("/api/workouts/:id", ({ body, params }, res) => {
-    Workout.findByIdAndUpdate(
-        params.id,
-        { $push: { exercises: body } },
-        { new: true, runValidators: true }
-    )
-        .then(dbWorkout => {
-            res.json(dbWorkout);
-        })
-        .catch(err => {
-            res.json(err);
-        });
-});
+
 
 module.exports = router;
