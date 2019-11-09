@@ -18,10 +18,11 @@ app.use(express.static("public"));
 //   useFindAndModify: false
 // });
 
-mongoose.Promise = global.Promise;
+//mongoose.Promise = global.Promise;
 
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://user1:password1@ds241268.mlab.com:41268/heroku_g67ngjt4",
+  process.env.MONGODB_URI || 
+  "mongodb://user1:password1@ds241268.mlab.com:41268/heroku_g67ngjt4",
   {
     useMongoClient: true
   }
