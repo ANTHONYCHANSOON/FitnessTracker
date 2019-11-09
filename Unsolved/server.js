@@ -18,9 +18,18 @@ app.use(express.static("public"));
 //   useFindAndModify: false
 // });
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+mongoose.Promise = global.Promise;
 
-mongoose.connect(MONGODB_URI);
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://user1:password1@ds241268.mlab.com:41268/heroku_g67ngjt4",
+  {
+    useMongoClient: true
+  }
+);
+
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://user1:password1@ds241268.mlab.com:41268/heroku_g67ngjt4";
+
+// mongoose.connect(MONGODB_URI);
 
 // routes
 app.use(require("./routes/api.js"));
